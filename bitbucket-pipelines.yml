@@ -1,12 +1,18 @@
 image: node:16
-
-pipelines:
-  default:
-    - step:
-        name: Build and Test
-        caches:
-          - node
-        script:
-          - npm install --legacy-peer-deps
-          - npm run build
-          - npm run test-react
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm ci --legacy-peer-deps
+    build:
+      commands:
+        - npm run build
+        - npm run test-react
+  artifacts:
+    baseDirectory: build
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - node_modules/**/*
