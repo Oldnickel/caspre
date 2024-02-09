@@ -36,7 +36,7 @@ class IndexPage extends Component {
                 AICE <span className="text-eggyellow">Credit Scoring</span> Tool
               </h1>
               <h5 className="text-white font-bold mt-2">
-                A tool for efficient and fast credit scoring
+                A tool for efficient and fast credit scoring!
               </h5>
               <div className="mt-8">
                 <button
