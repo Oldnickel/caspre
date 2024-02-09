@@ -20,5 +20,5 @@ pipelines:
             variables:
               USER: collins
               SERVER: caspre.io
-              REMOTE_PATH: "/var/www/scp-deploy/caspre/"
+              REMOTE_PATH: "/var/www/scp-deploy/caspre"
               LOCAL_PATH: "build/*"
