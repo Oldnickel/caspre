@@ -13,7 +13,7 @@ pipelines:
         artifacts:
           - build/**
     - step:
-        name: Deploy artifacts using SCP to PROD
+        name: Deploy artifacts using SCP to production server
         deployment: production
         script:
           - pipe: atlassian/scp-deploy:0.3.3
