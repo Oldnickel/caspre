@@ -1,24 +1,60 @@
 image: node:16
 
 pipelines:
-  default:
-    - step:
-        name: Build and test
-        caches:
-          - node
-        script:
-          - npm install --legacy-peer-deps
-          - npm run test-react
-          - npm run build
-        artifacts:
-          - build/**
-    - step:
-        name: Deploy artifacts using SCP to production server
-        deployment: production
-        script:
-          - pipe: atlassian/scp-deploy:0.3.3
-            variables:
-              USER: collins
-              SERVER: caspre.io
-              REMOTE_PATH: "/var/www/scp-deploy/caspre"
-              LOCAL_PATH: "build/*"
+  branches:
+    "*":
+      - step:
+          name: Install and Test
+          caches:
+            - node
+          script:
+            - npm install --legacy-peer-deps
+            - npm run test
+    master:
+      - step:
+          name: Install dependencies
+          caches:
+            - node
+          script:
+            - npm install --legacy-peer-deps
+      - step:
+          name: Build and Test
+          caches:
+            - node
+          script:
+            - npm run build
+            - npm run test-react
+      - step:
+          name: Deploy artifacts using SCP to production server
+          deployment: production
+          script:
+            - pipe: atlassian/scp-deploy:0.3.3
+              variables:
+                USER: collins
+                SERVER: 51.158.107.197
+                REMOTE_PATH: "/var/www/scp-deploy/caspre"
+                LOCAL_PATH: "build/*"
+    development:
+      - step:
+          name: Install dependencies
+          caches:
+            - node
+          script:
+            - npm install --legacy-peer-deps
+      - step:
+          name: Build and Test
+          caches:
+            - node
+          script:
+            - npm run build
+            - npm run test-react
+      - step:
+          name: Deploy artifacts using SCP to development server
+          deployment: development
+          script:
+            - pipe: atlassian/scp-deploy:0.3.3
+              variables:
+                USER: collins
+                SERVER: 51.15.195.229
+                REMOTE_PATH: "/var/www/scp-deploy/caspre"
+                LOCAL_PATH: "build/*"
